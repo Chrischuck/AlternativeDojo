@@ -1,0 +1,34 @@
+
+version: '3.3'
+
+services:
+  #client:
+  # build:
+  #   context: ./client
+  #   dockerfile: Dockerfile
+  # command: npm run dev
+  # volumes:
+  #   - ./client:/app
+  # ports:
+  #   - '8080:8080'
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    command: npm run dev
+    volumes:
+      - ./server:/app
+    ports:
+      - '3000:3000'
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3307:3306'
+    expose:
+      - '3306'
