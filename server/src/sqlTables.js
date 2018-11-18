@@ -2,7 +2,7 @@ const createMedicineTable = `
 CREATE TABLE IF NOT EXISTS Medicine (
   id int(11) AUTO_INCREMENT NOT NULL,
   strain varchar(20) NOT NULL,
-  name varchar(20) NOT NULL,
+  name varchar(60) NOT NULL,
   price DECIMAL(4,2) NOT NULL DEFAULT 8.00, 
   quantity int(5) NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
@@ -11,10 +11,10 @@ CREATE TABLE IF NOT EXISTS Medicine (
 const createPharmacistTable = `
 CREATE TABLE IF NOT EXISTS Pharmacist (
   id int(11) AUTO_INCREMENT NOT NULL,
-  name varchar(20) NOT NULL,
+  name varchar(60) NOT NULL,
   date_of_birth date NOT NULL,
   phone_number varchar(20) NOT NULL UNIQUE,
-  email varchar(20) NOT NULL UNIQUE,
+  email varchar(60) NOT NULL UNIQUE,
   job_start_date date NOT NULL,
   years_of_exp int(2) NOT NULL,
   salary int(10) NOT NULL,
@@ -24,10 +24,11 @@ CREATE TABLE IF NOT EXISTS Pharmacist (
 const createPatientTable = `
   CREATE TABLE IF NOT EXISTS Patient (
   id int(11) AUTO_INCREMENT NOT NULL,
-  name varchar(20) NOT NULL,
+  name varchar(60) NOT NULL,
   date_of_birth date NOT NULL,
   phone_number varchar(20) NOT NULL UNIQUE,
-  email varchar(20) NOT NULL UNIQUE,
+  email varchar(60) NOT NULL UNIQUE,
+  created_at TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
   );
 `

@@ -104,11 +104,12 @@ const transactions = [
   },
 ]
 
-export default class Transactions extends React.Component {
+export default class Inventory extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      inventory: [],
       filter: '',
       clicked: null
     }
@@ -116,11 +117,19 @@ export default class Transactions extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData()
     document.addEventListener('mousedown', this.handleOutsideMousedown, false)
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleOutsideMousedown, false)
+  }
+
+  fetchData = async () => {
+    const inventory = await fetch('http://localhost:3000/inventory')
+      .then(data => data.json())
+
+    this.setState({ inventory: inventory.data || [] })
   }
 
   filterFunc = filtee => {
@@ -136,21 +145,11 @@ export default class Transactions extends React.Component {
   }
 
   setFilter = value => {
-    this.setState({ filter:value }) 
-  }
-
-  onRowClick = (index) => {
-    this.setState((prevState) => ({ clicked: prevState.clicked === index ? null : index }))
-  }
-
-  handleOutsideMousedown = (event) => {
-    if (!this.table.current.contains(event.target)) {
-      this.setState(() => ({ clicked: null }))
-    }
+    this.setState({ filter: value }) 
   }
 
   render() {
-    const { clicked } = this.state
+    const { inventory } = this.state
     return (
       <div className='content-body'>
         <div style={{display: 'flex', padding: '15px', flex: 1, flexDirection: 'column'}} >
@@ -161,33 +160,24 @@ export default class Transactions extends React.Component {
               <TableHead>
                   <SearchTableHeaderCell onChange={this.setFilter} />
                   <TextTableHeaderCell textAlign="center">
-                    ID
+                    Strain
                   </TextTableHeaderCell>
                   <TextTableHeaderCell textAlign="center">
-                    Patient ID
+                    Price
                   </TextTableHeaderCell>
                   <TextTableHeaderCell textAlign="center">
-                    Pharmacist ID
-                  </TextTableHeaderCell>
-                  <TextTableHeaderCell textAlign="center">
-                    Payment Method
-                  </TextTableHeaderCell>
-
-                  <TextTableHeaderCell textAlign="center">
-                    Total Sale
+                    Quantity
                   </TextTableHeaderCell>
               </TableHead>
 
               <TableBody height={740}>
                 {
-                  transactions.map((transaction, index) => (
+                  inventory.filter(this.filterFunc).map((inventory, index) => (
                     <TableRow key={index} isSelectable>
-                      <TextTableCell>{transaction.patient}</TextTableCell>
-                      <TextTableCell textAlign="center">{transaction.id}</TextTableCell>
-                      <TextTableCell textAlign="center">{transaction.patientId}</TextTableCell>
-                      <TextTableCell textAlign="center">{transaction.pharmacistId}</TextTableCell>
-                      <TextTableCell textAlign="center">{transaction.paymentMethod}</TextTableCell>
-                      <TextTableCell textAlign="center">{transaction.total}</TextTableCell>
+                      <TextTableCell>{inventory.name}</TextTableCell>
+                      <TextTableCell textAlign="center">{inventory.strain}</TextTableCell>
+                      <TextTableCell textAlign="center">${inventory.price}</TextTableCell>
+                      <TextTableCell textAlign="center">x{inventory.quantity}</TextTableCell>
                     </TableRow>
                   ))
                 }

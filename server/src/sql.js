@@ -11,6 +11,11 @@ const {
   createAppointmentTable
 } = require('./sqlTables')
 
+const {
+  medicines,
+  pharmacists
+} = require('./data')
+
 const pool = mysql.createPool({
   connectionLimit : 4,
   host     : '172.20.0.1',
@@ -61,6 +66,9 @@ async function initDB() {
   await queryRunner('ALTER TABLE Transaction AUTO_INCREMENT=420')
   await queryRunner('ALTER TABLE TransactionItem AUTO_INCREMENT=420')
   await queryRunner('ALTER TABLE Appointment AUTO_INCREMENT=420')
+
+  medicines.forEach(medicine => queryRunner('INSERT INTO Medicine SET ?', medicine))
+  pharmacists.forEach(pharmacist => queryRunner('INSERT INTO Pharmacist SET ?', pharmacist))
 }
 
 

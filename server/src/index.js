@@ -6,7 +6,11 @@ const { initDB } = require('./sql')
 
 const {
   appointmentRouter,
-  patientRouter
+  patientRouter,
+  inventoryRouter,
+  pharmacistRouter,
+  transactionRouter,
+  prescriptionRouter
 } = require('./routes')
 
 initDB()
@@ -19,6 +23,10 @@ app.use(cors())
 
 app.use('/appointment', appointmentRouter)
 app.use('/patient', patientRouter)
+app.use('/inventory', inventoryRouter)
+app.use('/pharmacist', pharmacistRouter)
+app.use('/transaction', transactionRouter)
+app.use('/prescription', prescriptionRouter)
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

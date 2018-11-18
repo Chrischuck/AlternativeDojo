@@ -1,7 +1,7 @@
 const { queryRunner } = require('../../../sql')
 
 module.exports = async (req, res) => {
-  await queryRunner('SELECT * FROM Patient')
+  await queryRunner('SELECT * FROM Transaction')
     .then((data) => {
       res.send({ data })
     })
