@@ -1,6 +1,8 @@
 import React from 'react'
 import { Text, TableCell, TableRow, TextTableCell, TextInput } from 'evergreen-ui'
 
+import { formatDate } from '../../../utils/dates'
+
 export default class EditRow extends React.Component {
 
   saveProfile = () => {
@@ -15,20 +17,35 @@ export default class EditRow extends React.Component {
           <TextInput placeholder={profile.name} height={36} name={36} id={36} width={'100%'} />
         </TableCell>
 
-        <TextTableCell textAlign="center">{profile.id}</TextTableCell>
-        <TextTableCell textAlign="center">{profile.dob}</TextTableCell>
+        <TableCell className='small-cell' >
+          <Text fontWeight={400} size={300} >{profile.id}</Text>
+        </TableCell>
+
+        
+        <TableCell className='small-cell' >
+          <Text fontWeight={400} size={300} >{formatDate(profile.date_of_birth)}</Text>
+        </TableCell>
 
         <TableCell >
-          <TextInput placeholder={profile.phone} height={36} name={36} id={36} width={'100%'} />
+          <TextInput placeholder={profile.phone_number} height={36} name={36} id={36} width={'100%'} />
         </TableCell>
+
         <TableCell >
           <TextInput placeholder={profile.email} height={36} name={36} id={36} width={'100%'} />
         </TableCell>
         
-        <TextTableCell textAlign="center">{profile.jobStartDate}</TextTableCell>
-        <TextTableCell textAlign="center">{profile.yearsOfExp}</TextTableCell>
-        <TextTableCell textAlign="center">{profile.salary}</TextTableCell>
-        
+        <TableCell className='small-cell' >
+          <Text fontWeight={400} size={300} >{formatDate(profile.job_start_date)}</Text>
+        </TableCell>
+
+        <TableCell className='small-cell' >
+          <Text fontWeight={400} size={300} >{profile.years_of_exp}</Text>
+        </TableCell>
+
+        <TableCell className='small-cell' >
+          <Text fontWeight={400} size={300} >{profile.salary}</Text>
+        </TableCell>
+                    
         <TableCell className='edit-cell' >
 
           <Text fontWeight={400} size={300} >

@@ -136,6 +136,14 @@ input[type=number]::-webkit-outer-spin-button {
   justify-content: center !important;
 }
 
+.small-cell {
+  padding: 10px 0px !important;
+  width: 120px !important;
+  flex: none !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
 .name-cell {
   min-width: 216px !important;
   flex: 1 !important;

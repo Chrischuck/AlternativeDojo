@@ -149,3 +149,9 @@ export const yearList = [
 export const hourList = ['09', '10', '11', '12', '13', '14', '15', '16', '17']
 export const minuteList = ['00', '15', '30', '45']
 export const currentYearList = ['2018', '2019']
+
+
+export const formatDate = (d) => {
+  const date = new Date(d)
+  return (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear()
+}

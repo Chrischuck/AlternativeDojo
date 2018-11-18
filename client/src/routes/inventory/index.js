@@ -118,11 +118,6 @@ export default class Inventory extends React.Component {
 
   componentDidMount() {
     this.fetchData()
-    document.addEventListener('mousedown', this.handleOutsideMousedown, false)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleOutsideMousedown, false)
   }
 
   fetchData = async () => {
@@ -172,12 +167,17 @@ export default class Inventory extends React.Component {
 
               <TableBody height={740}>
                 {
+                  inventory.length > 0 ?
                   inventory.filter(this.filterFunc).map((inventory, index) => (
                     <TableRow key={index} isSelectable>
                       <TextTableCell>{inventory.name}</TextTableCell>
                       <TextTableCell textAlign="center">{inventory.strain}</TextTableCell>
                       <TextTableCell textAlign="center">${inventory.price}</TextTableCell>
                       <TextTableCell textAlign="center">x{inventory.quantity}</TextTableCell>
+                    </TableRow>
+                  )) :
+                  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map((_, index) => (
+                    <TableRow key={index} isSelectable>
                     </TableRow>
                   ))
                 }
