@@ -25,8 +25,8 @@ app.use('/appointment', appointmentRouter)
 app.use('/patient', patientRouter)
 app.use('/inventory', inventoryRouter)
 app.use('/pharmacist', pharmacistRouter)
-app.use('/transaction', transactionRouter)
 app.use('/prescription', prescriptionRouter)
+app.use('/transaction', transactionRouter)
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

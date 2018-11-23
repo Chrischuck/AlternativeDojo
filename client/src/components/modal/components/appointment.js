@@ -21,7 +21,9 @@ export default class extends React.Component {
       },
       body: JSON.stringify(payload)
     })
-    this.props.metadata.refetch()
+    if (this.props.page === 'APPOINTMENTS') {
+      this.props.metadata.refetch()
+    }
     this.props.closeModal()
   }
 

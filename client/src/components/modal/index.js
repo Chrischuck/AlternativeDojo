@@ -6,33 +6,19 @@ import Patient from './components/patient'
 import Prescription from './components/prescription'
 import Payment from './components/payment'
 
-const medicineList = [
-  {
-    name: 'OG Kush',
-    price: 10
-  },
-  {
-    name: 'Cookie Monster',
-    price: 8
-  },
-  {
-    name: 'Purple Raine',
-    price: 12
-  },
-].sort((a, b) => a.name > b.name)
 
 export default class Modal extends React.Component {
   renderModal = () => {
-    const { modalType, metadata } = this.props
+    const { modalType, metadata, page } = this.props
     switch (modalType) {
       case 'PATIENT':
-        return <Patient metadata={metadata} closeModal={this.closeModal}/>
+        return <Patient page={page} metadata={metadata} closeModal={this.closeModal}/>
       case 'PRESCRIPTION':
-        return <Prescription metadata={metadata} medicineList={medicineList} closeModal={this.closeModal}/>
+        return <Prescription page={page} metadata={metadata} closeModal={this.closeModal}/>
       case 'APPOINTMENT':
-        return <Appointment metadata={metadata} closeModal={this.closeModal}/>
+        return <Appointment page={page} metadata={metadata} closeModal={this.closeModal}/>
       case 'PAYMENT':
-        return <Payment metadata={metadata} closeModal={this.closeModal}/>
+        return <Payment page={page} metadata={metadata} closeModal={this.closeModal}/>
       default:
         return null
     }

@@ -3,126 +3,33 @@ import { Text, TableCell, Table, TableHead, SearchTableHeaderCell, TextTableHead
 
 import Row from './components/row'
 
-const transactions = [
-  {
-    id: 1,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 2,
-    patient: 'John Cena',
-    paymentMethod: 'cash',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 3,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 4,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 5,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-]
-
 export default class Transactions extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       filter: '',
-      clicked: null
+      clicked: null,
+      transactions: []
     }
     this.table = React.createRef();
   }
 
   componentDidMount() {
+    this.props.updateMetadata({ refetch: this.fetchData })
+    this.fetchData()
     document.addEventListener('mousedown', this.handleOutsideMousedown, false)
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleOutsideMousedown, false)
+  }
+
+  fetchData = async () => {
+    const transactions = await fetch('http://localhost:3000/transaction')
+      .then(data => data.json())
+
+    this.setState({ transactions: transactions || [] })
   }
 
   filterFunc = filtee => {
@@ -152,7 +59,7 @@ export default class Transactions extends React.Component {
   }
 
   render() {
-    const { clicked } = this.state
+    const { clicked, transactions } = this.state
     return (
       <div className='content-body'>
         <div style={{display: 'flex', padding: '15px', flex: 1, flexDirection: 'column'}} >

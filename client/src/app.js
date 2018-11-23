@@ -19,7 +19,7 @@ export default class App extends React.Component {
 
     this.state = {
       modalType: null,
-      page: 'PRESCRIPTIONS',
+      page: 'TRANSACTIONS',
       metadata: {} // pass closures in 
     }
   }
@@ -66,6 +66,7 @@ export default class App extends React.Component {
         {
          (modalType) &&
           <Modal
+            page={page}
             modalType={modalType}
             toggleModal={this.toggleModal}
             metadata={metadata}

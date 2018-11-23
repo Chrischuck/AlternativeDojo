@@ -63,6 +63,7 @@ const createTransactionTable = `
     created_at TIMESTAMP NOT NULL,
     patient_id int(11) NOT NULL,
     pharmacist_id int(11) NOT NULL,
+    payment_type varchar(20) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (patient_id) REFERENCES Patient(id),
     FOREIGN KEY (pharmacist_id) REFERENCES Pharmacist(id)
@@ -73,11 +74,11 @@ const createTransactionItemTable = `
 CREATE TABLE IF NOT EXISTS TransactionItem (
   id int(11) AUTO_INCREMENT NOT NULL,
   medicine_id int(11) NOT NULL,
-  prescription_id int(11) NOT NULL,
+  transaction_id int(11) NOT NULL,
   quantity int(5) NOT NULL DEFAULT 0,
   PRIMARY KEY (id),
   FOREIGN KEY (medicine_id) REFERENCES Medicine(id),
-  FOREIGN KEY (prescription_id) REFERENCES Prescription(id)
+  FOREIGN KEY (transaction_id) REFERENCES Transaction(id)
 );
 `
 

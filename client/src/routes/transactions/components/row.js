@@ -15,10 +15,10 @@ export default class extends React.Component {
         <TableRow key={index} isSelectable onClick={() => onRowClick(index)}>
           <TextTableCell>{transaction.patient}</TextTableCell>
           <TextTableCell textAlign="center">{transaction.id}</TextTableCell>
-          <TextTableCell textAlign="center">{transaction.patientId}</TextTableCell>
-          <TextTableCell textAlign="center">{transaction.pharmacistId}</TextTableCell>
-          <TextTableCell textAlign="center">{transaction.paymentMethod}</TextTableCell>
-          <TextTableCell textAlign="center">{transaction.total}</TextTableCell>
+          <TextTableCell textAlign="center">{transaction.patient_id}</TextTableCell>
+          <TextTableCell textAlign="center">{transaction.pharmacist_id}</TextTableCell>
+          <TextTableCell textAlign="center">{transaction.payment_type}</TextTableCell>
+          <TextTableCell textAlign="center">${transaction.total}</TextTableCell>
         </TableRow>
           <div style={{backgroundColor: '#e5e9ea', transition: 'linear .25s', height: index === clicked ? (this.row.current ? (this.row.current.clientHeight + 14) + 'px' : '0px') : '0px', overflow: 'hidden'}}>
             <div style={{ margin: '7px' }} ref={this.row}>
@@ -39,7 +39,7 @@ export default class extends React.Component {
                   {
                     transaction.medicines.map(medicine => (
                       <TableRow className='medicine-transaction-row' key={medicine.name} >
-                        <TextTableCell textAlign="center">{medicine.name}</TextTableCell>
+                        <TextTableCell textAlign="center">{medicine.medicine_name}</TextTableCell>
                         <TextTableCell textAlign="center">{medicine.quantity}</TextTableCell>
                         <TextTableCell textAlign="center">${medicine.price}</TextTableCell>
                       </TableRow>

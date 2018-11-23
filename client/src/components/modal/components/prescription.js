@@ -102,7 +102,9 @@ export default class extends React.Component {
         cart, pharmacist_id, patient_id
       })
     })
-    this.props.metadata.refetch()
+    if (this.props.page === 'PRESCRIPTIONS') {
+      this.props.metadata.refetch()
+    }
     this.props.closeModal()
   }
 
