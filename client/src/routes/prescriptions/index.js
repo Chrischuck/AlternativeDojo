@@ -181,6 +181,7 @@ export default class Prescriptions extends React.Component {
                       Fill
                     </Text>
                   </TableCell>
+                  
                   <TableCell className='edit-cell' >
                     <Text fontWeight={500} size={300} >
                       Cancel
