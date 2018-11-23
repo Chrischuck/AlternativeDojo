@@ -1,108 +1,6 @@
 import React from 'react'
 import { Text, TableCell, Table, TableHead, SearchTableHeaderCell, TextTableHeaderCell, TableBody, TableRow, TextTableCell } from 'evergreen-ui'
 
-const transactions = [
-  {
-    id: 1,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 2,
-    patient: 'John Cena',
-    paymentMethod: 'cash',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 3,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 4,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 5,
-    patient: 'John Cena',
-    paymentMethod: 'card',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-]
 
 export default class Inventory extends React.Component {
   constructor(props) {
@@ -148,7 +46,7 @@ export default class Inventory extends React.Component {
     return (
       <div className='content-body'>
         <div style={{display: 'flex', padding: '15px', flex: 1, flexDirection: 'column'}} >
-          <h1 style={{ margin: '0px', marginBottom: '10px', fontSize: '45px'}}>Transactions</h1>
+          <h1 style={{ margin: '0px', marginBottom: '10px', fontSize: '45px'}}>Inventory</h1>
           <div style={{ border: '1px solid #ccc', flex: 1 }} ref={this.table}>
 
             <Table>
