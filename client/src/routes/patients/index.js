@@ -16,7 +16,12 @@ export default class Patients extends React.Component {
   }
 
   componentDidMount() {
+    this.props.updateMetadata({ refetch: this.fetchData })
     this.fetchData()
+  }
+
+  componentWillUnmount() {
+    this.props.updateMetadata({})
   }
 
   filterFunc = filtee => {

@@ -19,8 +19,8 @@ export default class App extends React.Component {
 
     this.state = {
       modalType: null,
-      page: 'PATIENTS',
-      paymentData: {} // pass closures in 
+      page: 'APPOINTMENTS',
+      metadata: {} // pass closures in 
     }
   }
 
@@ -32,8 +32,8 @@ export default class App extends React.Component {
     this.setState({ page })
   }
 
-  updatePaymentData = (data) => {
-    this.setState({ paymentData: data })
+  updateMetadata = (data) => {
+    this.setState({ metadata: data })
   }
 
   renderPage = () => {
@@ -41,26 +41,26 @@ export default class App extends React.Component {
 
     switch (page) {
       case 'DASHBOARD':
-        return <Dashboard />
+        return <Dashboard updateMetadata={this.updateMetadata} />
       case 'PATIENTS':
-        return <Patients />
+        return <Patients updateMetadata={this.updateMetadata} />
       case 'EMPLOYEES':
-        return <Employees />
+        return <Employees updateMetadata={this.updateMetadata} />
       case 'TRANSACTIONS':
-        return <Transactions />
+        return <Transactions updateMetadata={this.updateMetadata} />
       case 'APPOINTMENTS':
-        return <Appointments />
+        return <Appointments updateMetadata={this.updateMetadata} />
       case 'INVENTORY':
-        return <Inventory />
+        return <Inventory updateMetadata={this.updateMetadata} />
       case 'PRESCRIPTIONS':
-        return <Prescriptions toggleModal={this.toggleModal} updatePaymentData={this.updatePaymentData} />
+        return <Prescriptions toggleModal={this.toggleModal} updateMetadata={this.updateMetadata} />
       default:
         return null
     }
   }
 
   render() {
-    const { modalType, page, paymentData } = this.state
+    const { modalType, page, metadata } = this.state
     return (
       <>
         {
@@ -68,8 +68,8 @@ export default class App extends React.Component {
           <Modal
             modalType={modalType}
             toggleModal={this.toggleModal}
-            paymentData={paymentData}
-            updatePaymentData={this.updatePaymentData}
+            metadata={metadata}
+            updateMetadata={this.updateMetadata}
           />
         }
         

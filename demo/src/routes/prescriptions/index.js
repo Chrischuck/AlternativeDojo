@@ -152,7 +152,7 @@ export default class Prescriptions extends React.Component {
 
   render() {
     const { clicked } = this.state
-    const { toggleModal, updatePaymentData } = this.props
+    const { toggleModal, updateMetadata } = this.props
     
     return (
       <div className='content-body'>
@@ -191,7 +191,7 @@ export default class Prescriptions extends React.Component {
               <TableBody height={740}>
                 {
                   prescriptions.map((prescription, index) => (
-                    <Row refetchData={this.refetchData} toggleModal={toggleModal} updatePaymentData={updatePaymentData} prescription={prescription} index={index} clicked={clicked} onRowClick={this.onRowClick} />
+                    <Row refetchData={this.refetchData} toggleModal={toggleModal} updateMetadata={updateMetadata} prescription={prescription} index={index} clicked={clicked} onRowClick={this.onRowClick} />
                   ))
                 }
               </TableBody>

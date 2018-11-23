@@ -23,16 +23,16 @@ const medicineList = [
 
 export default class Modal extends React.Component {
   renderModal = () => {
-    const { modalType, paymentData } = this.props
+    const { modalType, metadata } = this.props
     switch (modalType) {
       case 'PATIENT':
-        return <Patient closeModal={this.closeModal}/>
+        return <Patient metadata={metadata} closeModal={this.closeModal}/>
       case 'PRESCRIPTION':
-        return <Prescription medicineList={medicineList} closeModal={this.closeModal}/>
+        return <Prescription metadata={metadata} medicineList={medicineList} closeModal={this.closeModal}/>
       case 'APPOINTMENT':
-        return <Appointment closeModal={this.closeModal}/>
+        return <Appointment metadata={metadata} closeModal={this.closeModal}/>
       case 'PAYMENT':
-        return <Payment paymentData={paymentData} closeModal={this.closeModal}/>
+        return <Payment metadata={metadata} closeModal={this.closeModal}/>
       default:
         return null
     }
@@ -40,7 +40,7 @@ export default class Modal extends React.Component {
 
   closeModal = () => {
     this.props.toggleModal(null)
-    this.props.updatePaymentData({})
+    this.props.updateMetadata({})
   }
   
   render() {

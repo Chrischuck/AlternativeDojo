@@ -13,7 +13,7 @@ export default class extends React.Component {
     event.stopPropagation();
     const { prescription } = this.props
 
-    this.props.updatePaymentData({
+    this.props.updateMetadata({
       prescription,
       refetch: this.props.refetchData
     })

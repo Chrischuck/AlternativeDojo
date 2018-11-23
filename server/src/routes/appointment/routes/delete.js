@@ -1,9 +1,9 @@
 const { queryRunner } = require('../../../sql')
 
 module.exports = async (req, res) => {
-  const appointmentData = req.body
+  const { id } = req.body
   
-  await queryRunner('INSERT INTO Appointment SET ?', appointmentData)
+  await queryRunner('DELETE FROM Appointment WHERE id = ?', [id])
     .then(() => res.sendStatus(200))
     .catch((err) => {
       console.log(err)

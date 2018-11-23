@@ -21,6 +21,7 @@ export default class extends React.Component {
       },
       body: JSON.stringify(payload)
     })
+    this.props.metadata.refetch()
     this.props.closeModal()
   }
 

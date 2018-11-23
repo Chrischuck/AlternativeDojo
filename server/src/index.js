@@ -13,7 +13,7 @@ const {
   prescriptionRouter
 } = require('./routes')
 
-initDB()
+//initDB()
 
 const app = express()
 const port = 3000
