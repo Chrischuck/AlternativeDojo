@@ -26,13 +26,13 @@ export default class Modal extends React.Component {
     const { modalType, paymentData } = this.props
     switch (modalType) {
       case 'PATIENT':
-        return <Patient />
+        return <Patient closeModal={this.closeModal}/>
       case 'PRESCRIPTION':
-        return <Prescription medicineList={medicineList} />
+        return <Prescription medicineList={medicineList} closeModal={this.closeModal}/>
       case 'APPOINTMENT':
-        return <Appointment />
+        return <Appointment closeModal={this.closeModal}/>
       case 'PAYMENT':
-        return <Payment paymentData={paymentData} />
+        return <Payment paymentData={paymentData} closeModal={this.closeModal}/>
       default:
         return null
     }
