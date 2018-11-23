@@ -13,7 +13,8 @@ const {
 
 const {
   medicines,
-  pharmacists
+  pharmacists,
+  patients
 } = require('./data')
 
 const pool = mysql.createPool({
@@ -67,8 +68,9 @@ async function initDB() {
   await queryRunner('ALTER TABLE TransactionItem AUTO_INCREMENT=420')
   await queryRunner('ALTER TABLE Appointment AUTO_INCREMENT=420')
 
-  medicines.forEach(medicine => queryRunner('INSERT INTO Medicine SET ?', medicine))
-  pharmacists.forEach(pharmacist => queryRunner('INSERT INTO Pharmacist SET ?', pharmacist))
+  medicines.forEach(d => queryRunner('INSERT INTO Medicine SET ?', d))
+  pharmacists.forEach(d => queryRunner('INSERT INTO Pharmacist SET ?', d))
+  patients.forEach(d => queryRunner('INSERT INTO Patient SET ?', d))
 }
 
 

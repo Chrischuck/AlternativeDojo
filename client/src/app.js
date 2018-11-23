@@ -19,7 +19,7 @@ export default class App extends React.Component {
 
     this.state = {
       modalType: null,
-      page: 'EMPLOYEES',
+      page: 'PATIENTS',
       paymentData: {} // pass closures in 
     }
   }

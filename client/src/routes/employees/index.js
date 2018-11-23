@@ -1,58 +1,8 @@
 import React from 'react'
-import { TextInput, EditableCell, EditableCellField, Text, Label, Table, TableCell, TableHead, SearchTableHeaderCell, TextTableHeaderCell, TableBody, TableRow, TextTableCell } from 'evergreen-ui'
+import { Text, Table, TableCell, TableHead, SearchTableHeaderCell, TextTableHeaderCell, TableBody, TableRow } from 'evergreen-ui'
 
 import RegularRow from './components/regularRow'
 import EditRow from './components/editRow'
-
-const profiles = [
-  {
-    id: 1,
-    name: 'John Cena',
-    dob: '10/10/10',
-    phone: '650-494-4949',
-    email: 'adfs@adf.com',
-    jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-
-  },
-  {
-    id: 2,
-    name: 'Donald Trump',
-    dob: '10/10/10',
-    phone: '650-494-4949',
-    email: 'adfs@adf.com',
-    jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-  },
-  {
-    id: 3,
-    name: 'Scarlett Johanson',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com',
-        jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-  },
-  {
-    id: 4,
-    name: 'Nick cage',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com',
-        jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-  },
-  {
-    id: 5,
-    name: 'Megan Fox',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com',
-        jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-  },
-  {
-    id: 6,
-    name: 'Hillary Clinton',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com',
-        jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-  },
-  {
-    id: 7,
-    name: 'George Washington',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com',
-        jobStartDate: '10/10/10', yearsOfExp: 420, salary: '420,000'
-  },
-]
 
 export default class Employees extends React.Component {
   constructor(props) {
@@ -96,9 +46,22 @@ export default class Employees extends React.Component {
     this.setState({ editing: id })
   }
 
+  saveProfile = async payload => {
+    await fetch('http://localhost:3000/pharmacist/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        mode: 'cors'
+      },
+      body: JSON.stringify(payload)
+    })
+
+    this.fetchData()
+  }
+
   render() {
     const { employees } = this.state
-    console.log(employees)
+
     return (
       <div className='content-body'>
         <div style={{display: 'flex', padding: '15px', flex: 1, flexDirection: 'column'}} >
@@ -159,7 +122,7 @@ export default class Employees extends React.Component {
                 {
                   employees.length > 0 ?
                   employees.filter(this.filterFunc).map(profile => this.state.editing === profile.id ?
-                    <EditRow setEditableRow={this.setEditableRow} profile={profile} /> :
+                    <EditRow setEditableRow={this.setEditableRow} saveProfile={this.saveProfile} profile={profile} /> :
                     <RegularRow setEditableRow={this.setEditableRow} profile={profile} />
                   ) :
                   [1,1,1,1].map((_, index) => (

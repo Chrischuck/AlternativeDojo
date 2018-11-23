@@ -9,8 +9,8 @@ export default class RegularRow extends React.Component {
       <TableRow key={profile.id} isSelectable>
       <TextTableCell>{profile.name}</TextTableCell>
       <TextTableCell textAlign="center">{profile.id}</TextTableCell>
-      <TextTableCell textAlign="center">{profile.dob}</TextTableCell>
-      <TextTableCell textAlign="center">{profile.phone}</TextTableCell>
+      <TextTableCell textAlign="center">{profile.date_of_birth}</TextTableCell>
+      <TextTableCell textAlign="center">{profile.phone_number}</TextTableCell>
       <TextTableCell textAlign="center">{profile.email}</TextTableCell>
       <TableCell className='edit-cell' >
         <Text fontWeight={400} size={300} >

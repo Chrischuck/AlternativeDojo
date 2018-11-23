@@ -144,14 +144,24 @@ const pharmacists = [
     name: 'John Cena',
     date_of_birth: '1977-04-23',
     phone_number: '8667404531',
-    email: 'CandyPants564@Gmail.Org',
+    email: 'CandyPants564@Gmail.org',
     job_start_date: '2016-08-15',
     years_of_exp: 12,
     salary: 420000,
   }
 ]
 
+const patients = [
+  {
+    name: 'Donald Trump',
+    date_of_birth: '1946-05-14',
+    phone_number: '8667404531',
+    email: 'potus@whitehouse.gov',
+  }
+]
+
 module.exports = {
   medicines,
-  pharmacists
+  pharmacists,
+  patients
 }

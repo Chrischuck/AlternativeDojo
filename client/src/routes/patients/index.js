@@ -4,56 +4,19 @@ import { Text, TableCell, Table, TableHead, SearchTableHeaderCell, TextTableHead
 import RegularRow from './components/regularRow'
 import EditRow from './components/editRow'
 
-const profiles = [
-  {
-    id: 1,
-    name: 'John Cena',
-    dob: '10/10/10',
-    phone: '650-494-4949',
-    email: 'adfs@adf.com'
-  },
-  {
-    id: 2,
-    name: 'Donald Trump',
-    dob: '10/10/10',
-    phone: '650-494-4949',
-    email: 'adfs@adf.com'
-  },
-  {
-    id: 3,
-    name: 'Scarlett Johanson',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com'
-  },
-  {
-    id: 4,
-    name: 'Nick cage',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com'
-  },
-  {
-    id: 5,
-    name: 'Megan Fox',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com'
-  },
-  {
-    id: 6,
-    name: 'Hillary Clinton',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com'
-  },
-  {
-    id: 7,
-    name: 'George Washington',
-        dob: '10/10/10',     phone: '650-494-4949',     email: 'adfs@adf.com'
-  },
-]
-
 export default class Patients extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      patients: [],
       filter: '',
       editing: ''
     }
+  }
+
+  componentDidMount() {
+    this.fetchData()
   }
 
   filterFunc = filtee => {
@@ -76,7 +39,29 @@ export default class Patients extends React.Component {
     this.setState({ editing: id })
   }
 
+  fetchData = async () => {
+    const patients = await fetch('http://localhost:3000/patient')
+      .then(data => data.json())
+
+    this.setState({ patients: patients.data || [] })
+  }
+
+  saveProfile = async payload => {
+    await fetch('http://localhost:3000/patient/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        mode: 'cors'
+      },
+      body: JSON.stringify(payload)
+    })
+
+    this.fetchData()
+  }
+
+
   render() {
+    const { patients } = this.state
     return (
       <div className='content-body'>
         <div style={{display: 'flex', padding: '15px', flex: 1, flexDirection: 'column'}} >
@@ -107,8 +92,8 @@ export default class Patients extends React.Component {
 
               <TableBody height={740}>
                 {
-                  profiles.filter(this.filterFunc).map(profile => this.state.editing === profile.id ?
-                    <EditRow setEditableRow={this.setEditableRow} profile={profile} /> :
+                  patients.filter(this.filterFunc).map(profile => this.state.editing === profile.id ?
+                    <EditRow setEditableRow={this.setEditableRow} profile={profile} saveProfile={this.saveProfile} /> :
                     <RegularRow setEditableRow={this.setEditableRow} profile={profile} />
                   )
                 }
