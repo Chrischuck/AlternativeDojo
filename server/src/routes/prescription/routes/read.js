@@ -28,19 +28,40 @@ module.exports = async (req, res) => {
       const inItem = inventory.filter(z => z.id === item.medicine_id)
       return {
         ...item,
-        price: inItem[0].price,
-        medicine_name: inItem[0].name
+        price: inItem[0].price * item.quantity,
+        medicine_name: inItem[0].name,
+        
       }
     })
   ))
 
+  const patientPromises =  prescriptions.map(prescription => {
+    return queryRunner('SELECT name FROM Patient WHERE id = ?', [prescription.patient_id])
+      .then( data => data[0])
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(500)
+      })
+  })
 
-
-  console.log(newDataList)
-
+  const patients = await Promise.all(patientPromises)
 
   
-  res.sendStatus(200)
+  console.log(patients)
+  console.log(newDataList)
 
+  const payload = prescriptions.map((p, index) => {
+    let total = 0
 
+    newDataList[index].forEach(t => total += t.price)
+
+    return {
+      ...p,
+      patient: patients[index].name,
+      medicines: newDataList[index],
+      total
+    }
+  })
+
+  res.send(payload)
 }
