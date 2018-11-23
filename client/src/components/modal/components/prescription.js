@@ -2,32 +2,32 @@ import React from 'react'
 import { Label, TextInput, Combobox } from 'evergreen-ui'
 
 
-const medicineList = [
-  {
-    name: 'OG Kush',
-    price: 10
-  },
-  {
-    name: 'Cookie Monster',
-    price: 8
-  },
-  {
-    name: 'Purple Raine',
-    price: 12
-  },
-].sort((a, b) => a.name > b.name)
-
 export default class extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      medicineList: [],
       cart: [],
-      inCart: []
+      inCart: [],
+      pharmacist_id: '',
+      patient_id: ''
     }
   }
 
+  componentDidMount() {
+    this.fetchMedicine()
+  }
+
+  fetchMedicine = async () => {
+    const medicineList = await fetch('http://localhost:3000/inventory')
+    .then(data => data.json())
+
+    this.setState({ medicineList: medicineList.data.sort((a, b) => a.name > b.name) || [] })
+  }
+
   onChange = (value, obj) => { 
+    const { medicineList } = this.state
 
     obj.clearSelection()
     if (!value) {
@@ -88,8 +88,27 @@ export default class extends React.Component {
     return total
   }
 
+
+  createPrescription = async () => {
+    const { cart, pharmacist_id, patient_id } = this.state
+
+    await fetch('http://localhost:3000/prescription', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        mode: 'cors'
+      },
+      body: JSON.stringify({
+        cart, pharmacist_id, patient_id
+      })
+    })
+    //this.props.metadata.refetch()
+    //this.props.closeModal()
+  }
+
+
   render() {
-    const { cart, inCart } = this.state
+    const { cart, inCart, medicineList } = this.state
     return (
       <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
         <h1 style={{margin: '0px'}}>New Prescription</h1>
@@ -100,13 +119,13 @@ export default class extends React.Component {
             <Label htmlFor={36} size={400} display="block" marginBottom={4}>
               Pharmacist ID
             </Label>
-            <TextInput placeholder="9235234" height={36} name={36} id={36} />
+            <TextInput onChange={(e) => this.setState({pharmacist_id: e.target.value})} placeholder="9235234" height={36} name={36} id={36} />
           </div>
           <div style={{flex: 1,  marginLeft: '5px'}}>
             <Label htmlFor={36} size={400} display="block" marginBottom={4}>
               Patient ID
             </Label>
-            <TextInput placeholder="7621349" height={36} name={36} id={36} />
+            <TextInput onChange={(e) => this.setState({patient_id: e.target.value})} placeholder="7621349" height={36} name={36} id={36} />
           </div>
         </div>
 
@@ -183,7 +202,7 @@ export default class extends React.Component {
           Total Price: ${this.calculateTotalPrice()}
         </Label>
 
-        <a className='button' style={{margin: '20px 0px'}}>Create Prescription</a>
+        <a onClick={this.createPrescription} className='button' style={{margin: '20px 0px'}}>Create Prescription</a>
 
       </div>
     )
