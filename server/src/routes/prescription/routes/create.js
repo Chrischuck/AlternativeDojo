@@ -24,5 +24,6 @@ module.exports = async (req, res) => {
   ))
 
   await Promise.all(itemPromises)
+
   res.send(200)
 }

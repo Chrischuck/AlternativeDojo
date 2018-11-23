@@ -102,8 +102,8 @@ export default class extends React.Component {
         cart, pharmacist_id, patient_id
       })
     })
-    //this.props.metadata.refetch()
-    //this.props.closeModal()
+    this.props.metadata.refetch()
+    this.props.closeModal()
   }
 
 

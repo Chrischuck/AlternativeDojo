@@ -3,121 +3,33 @@ import { Text, TableCell, Table, TableHead, SearchTableHeaderCell, TextTableHead
 
 import Row from './components/row'
 
-const prescriptions = [
-  {
-    id: 1,
-    patient: 'John Cena',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 2,
-    patient: 'John Cena',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 3,
-    patient: 'John Cena',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 4,
-    patient: 'John Cena',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-  {
-    id: 5,
-    patient: 'John Cena',
-    total: 69,
-    patientId: 23,
-    pharmacistId: 12,
-    medicines: [
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      },
-      {
-        name: 'Purple Raine',
-        quantity: 10,
-        price: 69
-      }
-    ]
-  },
-]
-
 export default class Prescriptions extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       filter: '',
-      clicked: null
+      clicked: null,
+      prescriptions: []
     }
     this.table = React.createRef();
   }
 
   componentDidMount() {
+    this.props.updateMetadata({ refetch: this.fetchData })
+    this.fetchData()
     document.addEventListener('mousedown', this.handleOutsideMousedown, false)
   }
 
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleOutsideMousedown, false)
+  }
+
+  fetchData = async () => {
+    const prescriptions = await fetch('http://localhost:3000/prescription')
+      .then(data => data.json())
+
+    this.setState({ prescriptions: prescriptions || [] })
   }
 
   filterFunc = filtee => {
@@ -145,13 +57,10 @@ export default class Prescriptions extends React.Component {
       this.setState(() => ({ clicked: null }))
     }
   }
-
-  refetchData = () => {
-    // do some refetch data!!
-  }
+  
 
   render() {
-    const { clicked } = this.state
+    const { clicked, prescriptions } = this.state
     const { toggleModal, updateMetadata } = this.props
     
     return (
@@ -192,7 +101,7 @@ export default class Prescriptions extends React.Component {
               <TableBody height={740}>
                 {
                   prescriptions.map((prescription, index) => (
-                    <Row refetchData={this.refetchData} toggleModal={toggleModal} updateMetadata={updateMetadata} prescription={prescription} index={index} clicked={clicked} onRowClick={this.onRowClick} />
+                    <Row refetch={this.fetchData} toggleModal={toggleModal} refetch={this.fetchData} updateMetadata={updateMetadata} prescription={prescription} index={index} clicked={clicked} onRowClick={this.onRowClick} />
                   ))
                 }
               </TableBody>

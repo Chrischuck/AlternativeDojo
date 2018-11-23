@@ -14,17 +14,28 @@ export default class extends React.Component {
     const { prescription } = this.props
 
     this.props.updateMetadata({
-      prescription,
-      refetch: this.props.refetchData
+      id: prescription.id,
+      refetch: this.props.refetch
     })
     this.props.toggleModal('PAYMENT')
   }
 
 
-  deletePrescription = (event) => {
+  deletePrescription = async (event, id) => {
     event.stopPropagation();
-    // ... refetch
+    await fetch('http://localhost:3000/prescription/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        mode: 'cors'
+      },
+      body: JSON.stringify({ id })
+    })
+
+    this.props.refetch()
   }
+
+
   render() {
     const { prescription, index, clicked, onRowClick } = this.props
     return (
@@ -32,8 +43,8 @@ export default class extends React.Component {
         <TableRow key={index} isSelectable onClick={() => onRowClick(index)}>
           <TextTableCell>{prescription.patient}</TextTableCell>
           <TextTableCell textAlign="center">{prescription.id}</TextTableCell>
-          <TextTableCell textAlign="center">{prescription.patientId}</TextTableCell>
-          <TextTableCell textAlign="center">{prescription.pharmacistId}</TextTableCell>
+          <TextTableCell textAlign="center">{prescription.patient_id}</TextTableCell>
+          <TextTableCell textAlign="center">{prescription.pharmacist_id}</TextTableCell>
           <TextTableCell textAlign="center">${prescription.total}</TextTableCell>
           <TableCell className='edit-cell' >
             <Text fontWeight={400} size={300} >
@@ -42,7 +53,7 @@ export default class extends React.Component {
           </TableCell>
           <TableCell className='edit-cell' >
             <Text fontWeight={400} size={300} >
-              <svg onClick={this.deletePrescription} height='21px' role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#e74c3c" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"></path></svg>
+              <svg onClick={(e) => this.deletePrescription(e, prescription.id)} height='21px' role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#e74c3c" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm101.8-262.2L295.6 256l62.2 62.2c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 295.6l-62.2 62.2c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l62.2-62.2-62.2-62.2c-4.7-4.7-4.7-12.3 0-17l22.6-22.6c4.7-4.7 12.3-4.7 17 0l62.2 62.2 62.2-62.2c4.7-4.7 12.3-4.7 17 0l22.6 22.6c4.7 4.7 4.7 12.3 0 17z"></path></svg>
             </Text>
           </TableCell>
         </TableRow>
@@ -65,8 +76,8 @@ export default class extends React.Component {
                   {
                     prescription.medicines.map(medicine => (
                       <TableRow className='medicine-transaction-row' key={medicine.name} >
-                        <TextTableCell textAlign="center">{medicine.name}</TextTableCell>
-                        <TextTableCell textAlign="center">{medicine.quantity}</TextTableCell>
+                        <TextTableCell textAlign="center">{medicine.medicine_name}</TextTableCell>
+                        <TextTableCell textAlign="center">x{medicine.quantity}</TextTableCell>
                         <TextTableCell textAlign="center">${medicine.price}</TextTableCell>
                       </TableRow>
                     ))

@@ -23,12 +23,35 @@ export default class extends React.Component {
     })
   }
 
-  chargeCard = () => {
+  chargeCard = async () => {
+    const id = this.props.metadata.id
+    await fetch('http://localhost:3000/prescription/fill', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        mode: 'cors'
+      },
+      body: JSON.stringify({ id, type: 'card'})
+    })
 
+    this.props.metadata.refetch()
+    this.props.closeModal()
   }
 
-  chargeCash = () => {
+  chargeCash = async () => {
+    const id = this.props.metadata.id
 
+    await fetch('http://localhost:3000/prescription/fill', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        mode: 'cors'
+      },
+      body: JSON.stringify({id, type: 'cash' })
+    })
+
+    this.props.metadata.refetch()
+    this.props.closeModal()
   }
   render() {
     const { readableCreditCard } = this.state
@@ -80,11 +103,11 @@ export default class extends React.Component {
           </div>
         </div>
 
-        <a className='button' style={{margin: '20px 0px'}}>Pay Card</a>
+        <a onClick={this.chargeCard} className='button' style={{margin: '20px 0px'}}>Pay Card</a>
 
         <p className='line-wrap'><span>or</span></p>
 
-        <a className='button' style={{margin: '20px 0px'}}>Cash Payment</a>
+        <a onClick={this.chargeCash} className='button' style={{margin: '20px 0px'}}>Cash Payment</a>
 
       </div>
     )
