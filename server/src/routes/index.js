@@ -4,6 +4,7 @@ const inventoryRouter = require('./inventory')
 const pharmacistRouter = require('./pharmacist')
 const transactionRouter = require('./transaction')
 const prescriptionRouter = require('./prescription')
+const dashboardRouter = require('./dashboard')
 
 module.exports = {
   appointmentRouter,
@@ -11,5 +12,6 @@ module.exports = {
   inventoryRouter,
   pharmacistRouter,
   transactionRouter,
-  prescriptionRouter
+  prescriptionRouter,
+  dashboardRouter
 }

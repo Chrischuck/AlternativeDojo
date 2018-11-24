@@ -10,7 +10,8 @@ const {
   inventoryRouter,
   pharmacistRouter,
   transactionRouter,
-  prescriptionRouter
+  prescriptionRouter,
+  dashboardRouter
 } = require('./routes')
 
 //initDB()
@@ -27,6 +28,7 @@ app.use('/inventory', inventoryRouter)
 app.use('/pharmacist', pharmacistRouter)
 app.use('/prescription', prescriptionRouter)
 app.use('/transaction', transactionRouter)
+app.use('/dashboard', dashboardRouter)
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
