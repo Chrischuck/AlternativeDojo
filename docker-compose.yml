@@ -2,20 +2,20 @@
 version: '3.3'
 
 services:
-  #client:
-  # build:
-  #   context: ./client
-  #   dockerfile: Dockerfile
-  # command: node server.js
-  # volumes:
-  #   - ./client:/app
-  # ports:
-  #   - '8080:8080'
+  client:
+   build:
+     context: ./client
+     dockerfile: Dockerfile
+   command: node server.js
+   volumes:
+     - ./client:/app
+   ports:
+     - '8080:8080'
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
-    command: npm run dev
+    command: npm run start
     depends_on:
       - db
     volumes:
