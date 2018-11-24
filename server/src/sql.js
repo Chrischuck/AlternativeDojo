@@ -19,7 +19,7 @@ const {
 
 const pool = mysql.createPool({
   connectionLimit : 4,
-  host     : '172.20.0.1',
+  host     : 'database',
   user     : 'user',
   password : 'password',
   database : 'db',
