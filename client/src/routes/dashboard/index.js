@@ -3,7 +3,25 @@ import React from 'react'
 import Card from '../../components/card'
 
 export default class Dashboard extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      data: {}
+    }
+  }
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData = async () => {
+    const data = await fetch('http://localhost:3000/dashboard').then(data => data.json())
+    this.setState({ data })
+  }
+
   render() {
+    const { data } = this.state
     return (
       <div className='content-body'>
         <div style={{display: 'flex', padding: '15px', flexDirection: 'column', flex: 1}} >
@@ -21,7 +39,7 @@ export default class Dashboard extends React.Component {
                   color: 'white',
                   letterSpacing: '1px'
               }}>
-                <h1 style={{margin: '0px', fontSize: '50px'}}>37</h1>
+                <h1 style={{margin: '0px', fontSize: '50px'}}>{data.patientCount}</h1>
                 <p style={{margin: '0px' }}>Total Patients</p>
               </div>
               <div style={{
@@ -33,13 +51,13 @@ export default class Dashboard extends React.Component {
                   color: '#a8aaae',
                   fontSize: '18px'
               }}>
-                <p>New this week: <span style={{fontWeight: 600, color: 'rgb(137, 138, 142)'}}>12</span></p>
+                <p>New this week: <span style={{fontWeight: 600, color: 'rgb(137, 138, 142)'}}>{data.recentPatientCount}</span></p>
               </div>
             </Card>
 
             <Card title='Sales'>
               <div style={{
-                  height: '180px',
+                  height: '100%',
                   backgroundColor: 'rgb(41, 150, 204)',
                   display: 'flex',
                   justifyContent: 'center',
@@ -49,47 +67,22 @@ export default class Dashboard extends React.Component {
                   color: 'white',
                   letterSpacing: '1px'
               }}>
-                <h1 style={{margin: '0px', fontSize: '50px'}}>$3,000,000</h1>
+                <h1 style={{margin: '0px', fontSize: '50px'}}>${data.totalSales}</h1>
                 <p style={{margin: '0px'}}>Total Sales</p>
-              </div>
-              <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignContent: 'center',
-                  flexDirection: 'column',
-                  color: '#a8aaae',
-                  fontSize: '18px'
-              }}>
-                <p>Last Sale: <span style={{fontWeight: 600, color: 'rgb(137, 138, 142)'}}>$500,000</span></p>
               </div>
             </Card>
 
             <Card title='Payment Methods'>
-              <div className='payment-method-row' style={{ height: '50%', backgroundColor: '#2996cc' }}>
+              <div className='payment-method-row' style={{ height: data.paymentData ? `${data.paymentData.cardPercentage * 100}%` : '0%', backgroundColor: '#2996cc' }}>
                 <p style={{fontSize: '20px'}}>
-                  <b style={{fontWeight: 600}}>Card</b> (<span style={{fontWeight: 200}}>50%</span>)
-                  <span style={{float: 'right'}}>$50,000</span>
+                  <b style={{fontWeight: 600}}>Card</b> (<span style={{fontWeight: 200}}>{data.paymentData ? data.paymentData.cardPercentage * 100 : ''}%</span>)
                 </p>
 
               </div>
-              <div className='payment-method-row' style={{ height: '20%', backgroundColor: '#3d454d' }}>
+              <div className='payment-method-row' style={{ height: data.paymentData ? `${data.paymentData.cashPercentage * 100}%` : '0%', backgroundColor: '#3d454d' }}>
                 <p style={{fontSize: '19px'}}>
-                  <b style={{fontWeight: 600}}>Cash</b> (<span style={{fontWeight: 200}}>20%</span>)
-                  <span style={{float: 'right'}}>$20,000</span>
+                  <b style={{fontWeight: 600}}>Cash</b> (<span style={{fontWeight: 200}}>{ data.paymentData ? data.paymentData.cashPercentage * 100 : '0%'}%</span>)
                 </p>              
-              </div>
-              <div className='payment-method-row' style={{ height: '15%', backgroundColor: '#73777a' }}>
-                <p style={{fontSize: '19px'}}>
-                  <b style={{fontWeight: 600}}>Gift Card</b> (<span style={{fontWeight: 200}}>15%</span>)
-                  <span style={{float: 'right'}}>$15,000</span>
-                </p> 
-              </div>
-              <div className='payment-method-row' style={{ height: '15%', backgroundColor: '#c2c7cc' }}>
-                <p style={{fontSize: '19px'}}>
-                  <b style={{fontWeight: 600}}>Other</b> (<span style={{fontWeight: 200}}>15%</span>)
-                  <span style={{float: 'right'}}>$15,000</span>
-                </p> 
               </div>
             </Card>
           </div>
@@ -130,7 +123,7 @@ export default class Dashboard extends React.Component {
               </div>
             </Card>
 
-            <Card title='Invoices'>
+            <Card title='Employees'>
               <div style={{
                   flex: 1,
                   backgroundColor: 'rgb(84, 114, 204)',
@@ -142,8 +135,8 @@ export default class Dashboard extends React.Component {
                   color: 'white',
                   letterSpacing: '1px'
               }}>
-                <h1 style={{margin: '0px', fontSize: '50px'}}>$3,000</h1>
-                <p style={{margin: '0px'}}>Outstanding Payments</p>
+                <h1 style={{margin: '0px', fontSize: '50px'}}>{data.employeeCount}</h1>
+                <p style={{margin: '0px'}}>Total Employees</p>
               </div>
             </Card>
 
@@ -156,38 +149,17 @@ export default class Dashboard extends React.Component {
                   margin: '0px 15px',
                   overflowY: 'scroll'
               }}>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{width: '5%', color: '#60666d'}}>1</p>
-                  <b style={{width: '45%', color: '#60666d'}}>Grand Daddy Purp</b>
-                  <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}>$30,000</p>
-                  <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>45</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{width: '5%', color: '#60666d'}}>2</p>
-                  <b style={{width: '45%', color: '#60666d'}}>OG Kush</b>
-                  <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}>$12,000</p>
-                  <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>4</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{width: '5%', color: '#60666d'}}>3</p>
-                  <b style={{width: '45%', color: '#60666d'}}>Cookie Monster</b>
-                  <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}>$3,000</p>
-                  <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>10</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{width: '5%', color: '#60666d'}}>4</p>
-                  <b style={{width: '45%', color: '#60666d'}}>Purple Raine</b>
-                  <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}>$1,500</p>
-                  <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>8</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{width: '5%', color: '#60666d'}}>5</p>
-                  <b style={{width: '45%', color: '#60666d'}}>Khalifa Kush</b>
-                  <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}>$1,000</p>
-                  <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>5</p>
-                </div>
+                {
+                  data.topSalesList ? data.topSalesList.map((t, index) => (
+                    <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
+                      <p style={{width: '5%', color: '#60666d'}}>{index + 1}.</p>
+                      <b style={{width: '45%', color: '#60666d'}}>{t.name}</b>
+                      <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}></p>
+                      <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>{t.quantity}</p>
+                    </div>
+                  )) : []
+                }
               </div>
-
             </Card>
           </div>
 
@@ -202,33 +174,16 @@ export default class Dashboard extends React.Component {
                   margin: '0px 15px',
                   overflowY: 'scroll'
               }}>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{marginRight: '5px', color: '#60666d'}}>1</p>
-                  <b style={{flex: 1, color: '#60666d'}}>Grand Daddy Purp</b>
-                  <p style={{color: '#bbbdbf'}}>x145</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{marginRight: '5px', color: '#60666d'}}>2</p>
-                  <b style={{flex: 1, color: '#60666d'}}>OG Kush</b>
-                  <p style={{color: '#bbbdbf'}}>x54</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{marginRight: '5px', color: '#60666d'}}>3</p>
-                  <b style={{flex: 1, color: '#60666d'}}>Cookie Monster</b>
-                  <p style={{color: '#bbbdbf'}}>x110</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{marginRight: '5px', color: '#60666d'}}>4</p>
-                  <b style={{flex: 1, color: '#60666d'}}>Purple Raine</b>
-                  <p style={{color: '#bbbdbf'}}>x81</p>
-                </div>
-                <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
-                  <p style={{marginRight: '5px', color: '#60666d'}}>5</p>
-                  <b style={{flex: 1, color: '#60666d'}}>Khalifa Kush</b>
-                  <p style={{color: '#bbbdbf'}}>x65</p>
-                </div>
+                {
+                  data.inventory ? data.inventory.map((t, index) => (
+                    <div style={{display: 'flex', minHeight: '50px', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
+                      <p style={{marginRight: '5px', color: '#60666d'}}>{index + 1}.</p>
+                      <b style={{flex: 1, color: '#60666d'}}>{t.name}</b>
+                      <p style={{color: '#bbbdbf'}}>x{t.quantity}</p>
+                    </div>
+                  )) : []
+                }
               </div>
-
             </Card>
 
             <Card title='Deposit'>
@@ -258,7 +213,7 @@ export default class Dashboard extends React.Component {
                 <p>Last Deposit: <span style={{fontWeight: 600, color: 'rgb(137, 138, 142)'}}>$630,000</span></p>
               </div>
             </Card>
-            <Card title='Average Patient Spending'>
+            <Card title='Recent Sales'>
               <div style={{
                   height: '180px',
                   backgroundColor: '#63526b',
@@ -269,8 +224,8 @@ export default class Dashboard extends React.Component {
                   flexDirection: 'column',
                   color: 'white'
               }}>
-                <h1 style={{margin: '0px', fontSize: '50px'}}>$420</h1>
-                <p style={{margin: '0px' }}>Average Spent per Visit</p>
+                <h1 style={{margin: '0px', fontSize: '50px'}}>{data.recentSalesCount}</h1>
+                <p style={{margin: '0px' }}>Sales</p>
               </div>
               <div style={{
 
