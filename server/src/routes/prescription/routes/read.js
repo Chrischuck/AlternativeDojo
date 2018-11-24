@@ -46,10 +46,6 @@ module.exports = async (req, res) => {
 
   const patients = await Promise.all(patientPromises)
 
-  
-  console.log(patients)
-  console.log(newDataList)
-
   const payload = prescriptions.map((p, index) => {
     let total = 0
 

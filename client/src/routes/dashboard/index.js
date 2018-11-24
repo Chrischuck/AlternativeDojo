@@ -75,13 +75,13 @@ export default class Dashboard extends React.Component {
             <Card title='Payment Methods'>
               <div className='payment-method-row' style={{ height: data.paymentData ? `${data.paymentData.cardPercentage * 100}%` : '0%', backgroundColor: '#2996cc' }}>
                 <p style={{fontSize: '20px'}}>
-                  <b style={{fontWeight: 600}}>Card</b> (<span style={{fontWeight: 200}}>{data.paymentData ? data.paymentData.cardPercentage * 100 : ''}%</span>)
+                  <b style={{fontWeight: 600}}>Card</b> (<span style={{fontWeight: 200}}>{data.paymentData ? Math.round(data.paymentData.cardPercentage * 100) : ''}%</span>)
                 </p>
 
               </div>
               <div className='payment-method-row' style={{ height: data.paymentData ? `${data.paymentData.cashPercentage * 100}%` : '0%', backgroundColor: '#3d454d' }}>
                 <p style={{fontSize: '19px'}}>
-                  <b style={{fontWeight: 600}}>Cash</b> (<span style={{fontWeight: 200}}>{ data.paymentData ? data.paymentData.cashPercentage * 100 : '0%'}%</span>)
+                  <b style={{fontWeight: 600}}>Cash</b> (<span style={{fontWeight: 200}}>{ data.paymentData ? Math.round(data.paymentData.cashPercentage * 100) : '0%'}%</span>)
                 </p>              
               </div>
             </Card>
@@ -151,11 +151,11 @@ export default class Dashboard extends React.Component {
               }}>
                 {
                   data.topSalesList ? data.topSalesList.map((t, index) => (
-                    <div style={{display: 'flex', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
+                    <div style={{display: 'flex', minHeight: '50px', alignItems: 'center', height: '40px', borderBottom: '1px solid #eaeaea'}}>
                       <p style={{width: '5%', color: '#60666d'}}>{index + 1}.</p>
                       <b style={{width: '45%', color: '#60666d'}}>{t.name}</b>
                       <p style={{width: '40%', textAlign: 'right', color: '#6e747a'}}></p>
-                      <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>{t.quantity}</p>
+                      <p style={{width: '10%', textAlign: 'right', color: '#bbbdbf'}}>x{t.quantity}</p>
                     </div>
                   )) : []
                 }

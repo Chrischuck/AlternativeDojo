@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
 
   const itemPromises = cart.map(item => (
     queryRunner('INSERT INTO TransactionItem SET ?', {
-      medicine_id: item.id,
+      medicine_id: item.medicine_id,
       transaction_id: transactionId,
       quantity: item.quantity
     })

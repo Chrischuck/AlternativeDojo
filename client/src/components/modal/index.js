@@ -26,7 +26,6 @@ export default class Modal extends React.Component {
 
   closeModal = () => {
     this.props.toggleModal(null)
-    this.props.updateMetadata({})
   }
   
   render() {

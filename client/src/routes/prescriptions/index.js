@@ -22,6 +22,7 @@ export default class Prescriptions extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.updateMetadata({})
     document.removeEventListener('mousedown', this.handleOutsideMousedown, false)
   }
 

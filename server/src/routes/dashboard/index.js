@@ -51,7 +51,7 @@ router.route('/').get(async (req, res) => {
 
   let totalSales = 0
   transactionItems.forEach(item => {
-    const currItemList = inventory.filter(i => i.id = item.medicine_id)
+    const currItemList = inventory.filter(i => i.id === item.medicine_id)
     const currItem = currItemList[0]
 
     totalSales += currItem.price * item.quantity
@@ -78,7 +78,7 @@ router.route('/').get(async (req, res) => {
 
   const topSalesMap = {}
   transactionItems.forEach(item => {
-    const currItemList = inventory.filter(i => i.id = item.medicine_id)
+    const currItemList = inventory.filter(i => i.id === item.medicine_id)
     const currItem = currItemList[0]
     if (topSalesMap[currItem.id]) {
       topSalesMap[currItem.id].quantity += item.quantity
@@ -90,8 +90,7 @@ router.route('/').get(async (req, res) => {
     }
     totalSales += currItem.price * item.quantity
   })
-  const topSalesList = Object.values(topSalesMap).sort((a, b) => a.quantity > b.quantity)
-
+  const topSalesList = Object.values(topSalesMap).sort((a, b) => a.quantity < b.quantity)
 
   res.send({
     topSalesList,

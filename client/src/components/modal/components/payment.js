@@ -57,7 +57,7 @@ export default class extends React.Component {
   }
   render() {
     const { readableCreditCard } = this.state
-    console.log(this.props.metadata)
+
     return (
       <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
         <h1 style={{margin: '0px'}}>Payment</h1>
