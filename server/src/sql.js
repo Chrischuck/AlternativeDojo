@@ -19,10 +19,10 @@ const {
 
 const pool = mysql.createPool({
   connectionLimit : 4,
-  host     : 'database',
-  user     : 'user',
-  password : 'password',
-  database : 'db',
+  host     : process.env.DATABASE_URI,
+  user     : process.env.DATABASE_USER,
+  password : process.env.DATABASE_PASSWORD,
+  database : 'dojo',
   port: 3306
 });
 
